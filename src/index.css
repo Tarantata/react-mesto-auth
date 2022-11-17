@@ -44,12 +44,14 @@
 @import url('./blocks/popup/_type/_person/popup_type_person.css');
 @import url('./blocks/popup/_type/_confirm/popup_type_confirm.css');
 @import url('./blocks/popup/__close/popup__close.css');
+@import url('./blocks/popup/__close/popup__close-message.css');
 @import url('./blocks/popup/__comment/popup__comment.css');
 @import url('./blocks/popup/__cover/popup__cover.css');
 @import url('./blocks/popup/__container/popup__container.css');
 @import url('./blocks/popup/__picture/popup__picture-name.css');
 @import url('./blocks/popup/__picture/popup__picture-link.css');
 @import url('./blocks/popup/__form/popup__form-confirm.css');
+@import url('./blocks/popup/__form/popup__form-message.css');
 @import url('./blocks/popup/__form/popup__form-picture.css');
 @import url('./blocks/popup/__form/popup__form-place.css');
 @import url('./blocks/popup/__form/popup__form-person.css');

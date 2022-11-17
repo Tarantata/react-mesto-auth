@@ -39,11 +39,6 @@ function App() {
     setTooltipIsOk(tooltipIsOk);
   };
 
-  // const handleCardClick = (link) => { setSelectedCard(link) };
-  // const handleEditProfileClick = () => { setIsEditProfilePopupOpen(true) };
-  // const handleAddPlaceClick = () => { setIsAddPlacePopupOpen(true) };
-  // const handleEditAvatarClick = () => { setIsEditAvatarPopupOpen(true) };
-
   /* данные профиля с сервера */
     useEffect(() => {
       if (email) {
@@ -125,7 +120,6 @@ function App() {
 
  /* отправка данных для изменения аватара */
   function handleUpdateAvatar(avatarData) {
-    // setIsLoading(!isLoading);
     Api
       .getAvatarInfo(avatarData)
       .then((item) => {
@@ -154,22 +148,6 @@ function App() {
     // console.log(selectedCard)
   }
 
-  // async function handleTokenCheck() {
-
-    // const token = localStorage.getItem('token');
-    // if (token) {
-    //   Auth.checkToken(token)
-    //   .then((res) => {
-    //     if (res) {
-    //       handleLogin(res.data.email);
-    //       setIsLoggedIn(true);
-    //     }
-    //   })
-    //       .catch(err => console.error(err));
-  //   // }
-  //     setIsLoadingPage(false)
-  // }
-
   function handleRegister (email, password) {
     Auth.register(email, password)
       .then((res) => {
@@ -191,7 +169,7 @@ function App() {
         setIsLoggedIn(true);
         handleInfoTooltipOpen('Добро пожаловать!', true)
       } else {
-        handleInfoTooltipOpen('Неправильный \n логин или пароль', true)
+        handleInfoTooltipOpen('Неправильный \n логин или пароль', false)
       }
     } catch {} finally {
       setIsLoadingPage(false)
@@ -219,30 +197,9 @@ function App() {
         .catch((err) => console.error(err))
   }, [handleTokenCheck]);
 
-  // function handleAuthorize(email, password) {
-  //   Auth.authorize(email, password)
-  //     .then ((data) => {
-  //       if (data.token) {
-  //         localStorage.setItem('token', data.token);
-  //         handleLogin(email);
-  //         setIsLoggedIn(true);
-  //       } else {
-  //         handleInfoTooltipOpen('Неправильный \n логин или пароль', false)
-  //       }
-  //     })
-  //     .catch(() => handleInfoTooltipOpen('Что-то пошло не так. /n Попробуйте ещё раз.', false));
-  //   setIsLoadingPage(false)
-  // }
-
   function handleLogin(email) {
     setEmail(email);
     history.push('/');
-    // Promise.all([Api.getUserInfo(), Api.getInitialCards()])
-    //   .then(([users, cards]) => {
-    //   setCurrentUser(users);
-    //   setCards(cards);
-    // })
-    // .catch(err => { console.log(err) });
   }
 
   function handleSignOut() {

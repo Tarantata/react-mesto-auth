@@ -33,7 +33,7 @@ function App() {
   const [isLoadingPage, setIsLoadingPage] = React.useState(true);
   const history = useHistory();
 
-  const handleInfoTooltipOpen =(tooltipMessage, tooltipIsOk) => {
+  const handleInfoTooltipOpen = (tooltipMessage, tooltipIsOk) => {
     setIsInfoTooltipOpen(true);
     setTooltipMessage(tooltipMessage);
     setTooltipIsOk(tooltipIsOk);
@@ -41,7 +41,7 @@ function App() {
 
   /* данные профиля с сервера */
     useEffect(() => {
-      if (email) {
+      if (isLoggedIn) {
         Api
           .getUserInfo()
           .then((data) => {
@@ -150,14 +150,18 @@ function App() {
 
   function handleRegister (email, password) {
     Auth.register(email, password)
-      .then((res) => {
+      .then(() => {
         handleInfoTooltipOpen(
-          res.error ?
-            'Что-то пошло не так. \n Попробуйте ещё раз!' :
-            'Вы успешно \n зарегистрировались!', true
-            );
+            'Вы успешно \n зарегистрировались!',
+            true);
+        history.push('./sign-in');
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        handleInfoTooltipOpen(
+            'Что-то пошло не так. \n Попробуйте ещё раз!',
+            false)
+        console.error(err)
+      });
   }
 
   const handleAuthorize = React.useCallback(async (email, password) => {
@@ -168,10 +172,10 @@ function App() {
         handleLogin(email);
         setIsLoggedIn(true);
         handleInfoTooltipOpen('Добро пожаловать!', true)
-      } else {
-        handleInfoTooltipOpen('Неправильный \n логин или пароль', false)
       }
-    } catch {} finally {
+    } catch {
+      handleInfoTooltipOpen('Неправильный\n' + 'логин или пароль', false)
+    } finally {
       setIsLoadingPage(false)
     }
   }, []);
@@ -181,18 +185,16 @@ function App() {
       const token = localStorage.getItem('token');
       if (token) {
         const res = await Auth.checkToken(token);
-        // .then(() => {
         if (res) {
           handleLogin(res.data.email);
           setIsLoggedIn(true)
         }
-        // })
       }} finally {
       setIsLoadingPage(false)
     }
   }, []);
 
-  React.useEffect( () => {
+  useEffect( () => {
     handleTokenCheck()
         .catch((err) => console.error(err))
   }, [handleTokenCheck]);
